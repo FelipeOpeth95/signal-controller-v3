@@ -2,12 +2,15 @@
 
 #include <processors/transformer.h>
 
+#include <processors/aggregator.h>
+
 void setup() {
-  // put your setup code here, to run once:
 }
 
 void loop() {
   float raw_signal = analogRead(A0);
 
   float processed_signal = ScaleTransformer :: transform(raw_signal);
+
+  float aggregated_value = Aggregator :: averageWindow(processed_signal)
 }
