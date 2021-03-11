@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#include <sensors/read.h>
+
 template<class T>
 class Sensor{
     public:
@@ -25,6 +27,12 @@ Sensor<T>::Sensor(uint8_t id){
 } 
 
 template<class T>
+Read<T> Sensor<T>::getValue(){
+    this->changed = false;
+    return this->value;
+}
+
+template<class T>
 bool Sensor<T>::hasChanged(){
     return this-> value;
 }
@@ -43,7 +51,5 @@ void Sensor<T>::execute(){
         this->value = Read<T>(new_value, this->id)
     }
 }
-
-
 
 #endif
