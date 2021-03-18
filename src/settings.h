@@ -1,14 +1,10 @@
 #ifndef SETTING.H
 #define SETTINGS.H
 
-namespace Settings{
-    const int LED = 9;
-    const int POT = 0;
+#include <Arduino.h>
 
-    void initSettings(){
-        pinmMode(LED, OUTPUT);
-        pinMode(POT, INPUT);
-    }
+namespace SETTING {
+    const uint8_t SENSOR_INPUNT = A0; 
 }
 
 #endif
