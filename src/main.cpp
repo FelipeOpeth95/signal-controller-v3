@@ -1,22 +1,23 @@
 #include <Arduino.h>
 
 #include <processors/transformer.h>
-
 #include <processors/aggregator.h>
 
-int pin_LED = 9;
+#include <sensors/analog_sensor.h>
+
+AnalogSensor sensor = AnalogSensor(0x7E, A0);
 
 void setup() {
-  pinMode(pin_LED, OUTPUT); 
+  Serial.begin(115200);
+  pinMode(A0, INPUT);
+
 }
 
 void loop() {
+
+  sensor.execute();
+
   float raw_signal = analogRead(A0);
 
 
-  float processed_signal = ScaleTransformer :: transform(raw_signal);
-
-  float aggregated_value = Aggregator :: averageWindow(processed_signal);
-
-  float alarm = AlarmOutput :: activate_alarm(processed_signal);
 }
