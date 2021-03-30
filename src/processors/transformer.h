@@ -3,15 +3,19 @@
 
 #include <Arduino.h>
 
+
+template<class T>
+    T scaler(T input){
+        float value = map(input,0, 1023,0, 255);
+        return T(value);
+    }
+
 template<class T>
     T PID(T input, float kp, float ki, float kd, float setpoint){
-        
-        float value = map(input,0, 1023,0, 255);
-        
         float current_time = millis();
         float elapsed_time = current_time - previous_time;
 
-        float error = setpoint - value;
+        float error = setpoint - input;
         float acum_error = error + (error * elapsed_time;
 
         float rate_error = (error - last_error)/elapsed_time;
