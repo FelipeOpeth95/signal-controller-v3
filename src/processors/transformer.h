@@ -6,7 +6,7 @@
 
 template<class T>
     T scaler(T input){
-        float value = map(input,0, 1023,0, 255);
+        float value = map(input,0, 1023,0, 45);
         return T(value);
     }
 

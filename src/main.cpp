@@ -6,6 +6,7 @@
 
 #include <sensors/analog_sensor.h>
 
+ReadValues<int> read = ReadValues<int>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
 
 float kp = 100;
@@ -26,6 +27,8 @@ void loop() {
   if(sensor.hasChanged()){
     float raw_read = sensor.getValue().getValue();
     float scaled_read = scaler<float>(raw_read);
+    read.append(scaled_read);
+    int mean = read.mean();
     float transformed_read = PID<float>(scaled_read, kp, ki, kd, setpoint);
   }
 }
