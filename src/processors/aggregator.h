@@ -1,21 +1,43 @@
 #ifndef AGGREGATOR_H
 #define AGGREGATOR.H 
 
-namespace Aggregator{
-    int window = 10;
-    int counter = 0;
-    float average_temp = 0;
-    float average = 0;
+#include <Arduino.h>
 
-    float averageWindow(float input){
-        average_temp += input;
-        counter += 1;
-        if (counter == window){
-            average = average_temp / float(counter);
-            average_temp = 0;
-            counter = 0;
-        }
-        return average;
-    }
+template<class T>
+class ReadValues{
+    public:
+        ReadValues(int);
+        void append(T value);
+        uint8_t get_size(){
+            return this->size;
+        };
+        float mean();
+    private:
+        T *buffer;
+        uint8_t size;
+};
+
+template<class T>
+ReadValues<T>::ReadValues(int x){
+    this->size = x;
+    buffer = new T[size];
 }
+
+template<class T>
+void ReadValues<T>::append(T value){
+    for(int i = this->size - 1; i > 0; i--){
+        this->buffer[i] = this->buffer[i - 1];
+    }
+    this->buffer[0] = value;
+}
+
+template<class T>
+float ReadValues<T>::mean(){
+    T sum = 0;
+    for(int i = 0; i < this->size; i++) {
+        sum += this->buffer[i];
+    }
+    return float(sum) / size;
+}
+
 #endif
