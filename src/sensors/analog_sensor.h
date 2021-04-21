@@ -5,17 +5,17 @@
 
 #include <sensors/sensor.h>
 
-class AnalogSensor : public Sensor<int> {
+class AnalogSensor : public Sensor<float> {
     public:
-        AnalogSensor(uint8_t id, uint8_t pin):Sensor<int>(id){
+        AnalogSensor(uint8_t id, uint8_t pin):Sensor<float>(id){
         this->pin = pin;
         };
     private:
         uint8_t pin;
-        int read();
+        float read();
 };
 
-int AnalogSensor::read() {
+float AnalogSensor::read() {
     return analogRead(this->pin);
 }
 
