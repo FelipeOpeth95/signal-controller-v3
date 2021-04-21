@@ -1,5 +1,5 @@
-#ifndef SENSOR.H
-#define SENSOR.H
+#ifndef SENSOR_H
+#define SENSOR_H
 
 #include <Arduino.h>
 
@@ -34,7 +34,7 @@ Read<T> Sensor<T>::getValue(){
 
 template<class T>
 bool Sensor<T>::hasChanged(){
-    return this-> value;
+    return this-> changed;
 }
 
 template<class T>
@@ -48,7 +48,7 @@ void Sensor<T>::execute(){
     if (new_value != this->raw_value){
         this->changed = true;
         this->raw_value = new_value;
-        this->value = Read<T>(new_value, this->id)
+        this->value = Read<T>(new_value, this->id);
     }
 }
 

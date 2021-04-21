@@ -3,16 +3,13 @@
 
 #include <processors/transformer.h>
 #include <processors/aggregator.h>
-
 #include <sensors/analog_sensor.h>
+#include <output/signal.h>
+#include <output/actuator.h>
 
-ReadValues<int> read = ReadValues<int>(15);
+CircularBuffer<int> read = CircularBuffer<int>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
-
-float kp = 100;
-float kd = 10;
-float ki = 0.0005;
-float setpoint = 45;
+//PID<float> pidoutput = 
 
 void setup() {
   Serial.begin(115200);
@@ -28,7 +25,8 @@ void loop() {
     float raw_read = sensor.getValue().getValue();
     float scaled_read = scaler<float>(raw_read);
     read.append(scaled_read);
-    int mean = read.mean();
-    float transformed_read = PID<float>(scaled_read, kp, ki, kd, setpoint);
+    float level_mean = read.mean();
+    //float transformed_read = pidoutput. 
+
   }
 }
