@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <output/actuator.h>
-#include <output/signal.h>
+#include <output/velocity.h>
 
 class Pump : public Actuator<float> {
     public:
@@ -12,11 +12,11 @@ class Pump : public Actuator<float> {
         }
     private:
         uint8_t pin;
-        void write(Signal value);
+        void write(Velocity value);
 };
 
 
-void Pump::write(Signal value) {
+void Pump::write(Velocity value) {
     uint8_t discrete_signal = map(value.getValue(), 0, 50, 0, 255);
     analogWrite(this->pin, discrete_signal);
 }
