@@ -8,6 +8,7 @@
 #include <output/actuator.h>
 #include <output/pump.h>
 #include <entities/value.h>
+#include <output/alarm.h>
 
 CircularBuffer<int> read = CircularBuffer<int>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
@@ -29,6 +30,7 @@ void loop() {
     float scaled_read = scaler<float>(raw_read);
     read.append(scaled_read);
     float level_mean = read.mean();
+    bool signal_alarm = Alarm<bool>(level_mean);
     
     //float transformed_read = pidoutput. 
     //pump.setValue(transformed_read);
