@@ -2,28 +2,12 @@
 #define SIGNAL_H
 
 #include <Arduino.h>
+#include <entities/value.h>
 
-template<class T>
-class Signal {
+class Signal : public Value<float> {
     public:
-        Signal();
-        Signal(T value);
-        T getValue();
-    private:
-        T value;
+        Signal():Value(){};
+        Signal(float value, uint8_t source):Value(value,source){};
 };
-
-template<class T>
-Signal<T>::Signal(T value) {
-    this->value = value;
-}
-
-template<class T>
-Signal<T>::Signal() {}
-
-template<class T>
-T Signal<T>::getValue() {
-    return this->value;
-}
 
 #endif

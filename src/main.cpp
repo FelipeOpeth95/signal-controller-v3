@@ -6,9 +6,12 @@
 #include <sensors/analog_sensor.h>
 #include <output/signal.h>
 #include <output/actuator.h>
+#include <output/pump.h>
+#include <entities/value.h>
 
 CircularBuffer<int> read = CircularBuffer<int>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
+Pump pump = Pump(0xAB, 9);
 //PID<float> pidoutput = 
 
 void setup() {
@@ -21,12 +24,14 @@ void setup() {
 void loop() {
 
   sensor.execute();
-  if(sensor.hasChanged()){
+   if(sensor.hasChanged()){
     float raw_read = sensor.getValue().getValue();
     float scaled_read = scaler<float>(raw_read);
     read.append(scaled_read);
     float level_mean = read.mean();
+    
     //float transformed_read = pidoutput. 
-
+    //pump.setValue(transformed_read);
   }
+ // pump.excecute();
 }

@@ -2,21 +2,21 @@
 #define ACTUATOR_H
 
 #include <Arduino.h>
-#include <output/signal.h>
+#include <entities/value.h>
 
 template<class T>
 class Actuator {
     public:
         Actuator(uint8_t id);
-        void setValue(Signal<T> value);
-        Signal<T> getValue();
+        void setValue(T value);
+        Value<T> getValue();
         uint8_t getId();
         void excecute();
     private:
         bool hasToChange;
-        Signal<T> value;
+        T value;
         uint8_t  id;
-        virtual void write(Signal<T> value);
+        virtual void write(T value);
 };
 
 template<class T>
@@ -25,7 +25,7 @@ Actuator<T>::Actuator(uint8_t id) {
 };
 
 template<class T>
-void Actuator<T>::setValue(Signal<T> value) {
+void Actuator<T>::setValue(T value) {
     this->hasToChange = true;
     this->value = value;
 };
@@ -44,7 +44,7 @@ void Actuator<T>::excecute() {
 }
 
 template<class T>
-Signal<T> Actuator<T>::getValue() {
+Value<T> Actuator<T>::getValue() {
     return this->value;
 };
 

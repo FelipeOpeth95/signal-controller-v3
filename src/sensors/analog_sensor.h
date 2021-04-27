@@ -2,7 +2,6 @@
 #define ANALOG_SENSOR_H
 
 #include <Arduino.h>
-
 #include <sensors/sensor.h>
 
 class AnalogSensor : public Sensor<float> {
