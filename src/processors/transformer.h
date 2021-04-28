@@ -10,22 +10,35 @@ template<class T>
         return T(value);
     }
 
-template<class T>
+
 class PID{
     public:
-        PID();    
-        float PID_output(T value);
+        PID(float kp, float kd, float ki, float setpoint);    
+        float output(float value);
+        void set_point(float setpoint);
     private:
-        float kp = 100;
-        float kd = 10;
-        float ki = 0.0005;
-        float setpoint = 45;
-        float previous_time = 0;
-        float last_error = 0;      
+        float kp;
+        float kd;
+        float ki;
+        float setpoint;
+        float previous_time;
+        float last_error;      
 };
 
-template<class T>
-float PID<T>::PID_output(T value){
+PID::PID(float kp, float kd, float ki, float setpoint = 45){
+    this->kp = kp;
+    this->kd = kd;
+    this->ki = ki;
+    this->last_error = 0;
+    this->previous_time = millis();
+    this->setpoint = setpoint;
+}
+
+void PID::set_point(float setpoint){
+    this->setpoint = setpoint;
+} 
+
+float PID::output(float value){
     float current_time = millis();
     float elapsed_time = current_time - previous_time;
 
@@ -36,27 +49,10 @@ float PID<T>::PID_output(T value){
 
     float output = kp*error + ki*acum_error + kd*rate_error;
 
-    float last_error = error;
-    float previous_time = current_time;
+    this-> last_error = error;
+    this-> previous_time = current_time;
         
-    return T(output);
+    return output;
 }
-
-    // T PID(T input){
-    //     float current_time = millis();
-    //     float elapsed_time = current_time - previous_time;
-
-    //     float error = setpoint - input;
-    //     float acum_error = error + (error * elapsed_time;
-
-    //     float rate_error = (error - last_error)/elapsed_time;
-
-    //     float output = kp*error + ki*acum_error + kd*rate_error;
-
-    //     float last_error = error;
-    //     float previous_time = current_time;
-        
-    //     return T(output)
-    // }
 
 #endif

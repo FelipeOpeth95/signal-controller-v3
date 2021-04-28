@@ -13,7 +13,7 @@
 CircularBuffer<int> read = CircularBuffer<int>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
 Pump pump = Pump(0xAB, 9);
-//PID<float> pidoutput = 
+PID  pid = PID(10, 5, 0.005, 45);
 
 void setup() {
   Serial.begin(115200);
@@ -31,9 +31,8 @@ void loop() {
     read.append(scaled_read);
     float level_mean = read.mean();
     bool signal_alarm = Alarm<bool>(level_mean);
-    
-    //float transformed_read = pidoutput. 
-    //pump.setValue(transformed_read);
+    float transformed_read = pid.output(scaled_read);
+    pump.setValue(transformed_read);
   }
- // pump.excecute();
+  pump.excecute();
 }
