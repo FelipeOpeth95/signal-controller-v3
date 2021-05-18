@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 template<class T>
-T Alarm(T value){
+T Alarm(float value){
 
         if(value<=45  && value>=40){
             Serial.println("Preacaución: El nivel del tanque está bajando");
