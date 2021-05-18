@@ -12,12 +12,12 @@ class Pump : public Actuator<float> {
         }
     private:
         uint8_t pin;
-        void write(Velocity value);
+        void write(float value);
 };
 
 
-void Pump::write(Velocity value) {
-    uint8_t discrete_signal = map(value.getValue(), 0, 775, 0, 255);
+void Pump::write(float value) {
+    uint8_t discrete_signal = map(value, 0, 775, 0, 255);
     analogWrite(this->pin, discrete_signal);
 }
 
