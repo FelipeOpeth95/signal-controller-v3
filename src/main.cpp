@@ -11,7 +11,7 @@
 #include <output/alarm.h>
 #include <output/serial_print.h>
 
-CircularBuffer<int> read = CircularBuffer<int>(15);
+CircularBuffer<float> read = CircularBuffer<float>(15);
 AnalogSensor sensor = AnalogSensor(0x7E, A0);
 Pump pump = Pump(0x7F, 9);
 PID  pid = PID(10, 5, 0.005, 45);
@@ -40,7 +40,7 @@ void loop() {
     //serialPrint(Serial, level_mean, "Lectura promedio nivel tanque");
     serialPrint(Serial, transformed_read, "Entrada variador");
 
-    delay(1500);
+    //delay(1500);
   }
-  //pump.excecute(); 
+  pump.excecute(); 
 }
